@@ -1,5 +1,5 @@
 ---
-title: RCC: Retarded C-like Compiler
+title: "RCC: Retarded C-like Compiler"
 date: 2021-11-17 16:29:37
 tags: C++
 ---
