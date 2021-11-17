@@ -99,7 +99,8 @@ ignore:
 ## Themes: https://hexo.io/themes/
 # theme: wind
 # theme: hexo-crisp-minimal-theme
-theme: next
+# theme: next
+theme: landscape
 
 # Deployment
 ## Docs: https://hexo.io/docs/one-command-deployment
