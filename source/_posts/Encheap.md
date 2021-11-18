@@ -4,12 +4,15 @@ date: 2021-11-17 16:31:35
 tags: 
 - CUDA
 - SGX
+thumbnail: 
+- /img/sgx/demo.png
+
 ---
 
 <!-- ![visitors](https://visitor-badge.laobi.icu/badge?page_id=vtu81.Enchecap) -->
 
 An **enc**rypted (**enc**lave-based) **he**terogeneous **ca**lculation **p**rotocol based on Nvidia CUDA and Intel SGX with a simple sample of CUBLAS, designed and implemented by [Tinghao Xie](http://vtu.life), [Haoyang Shi](https://github.com/Luke-Skycrawler), [Zihang Li](https://github.com/zjulzhhh).
-
+<!-- more -->
 ### Enchecap illustration:
 
 ![demo](/img/sgx/demo.png)

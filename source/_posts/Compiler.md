@@ -2,10 +2,10 @@
 title: "RCC: Retarded C-like Compiler"
 date: 2021-11-17 16:29:37
 tags: C++
+
 ---
-
 Course project for Compiler Principle at ZJU. Co-Authored with @[Tinghao(Vitus) Xie](http://vtu.life/posts/2020/06/RCC/).[github](https://github.com/Luke-Skycrawler/rcc/)
-
+<!-- more -->
 
 ### Features
 - [x] Advanced self-defined types (nested struct and arrays)
