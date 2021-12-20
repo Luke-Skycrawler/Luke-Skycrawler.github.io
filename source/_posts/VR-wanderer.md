@@ -7,7 +7,7 @@ thumbnail:
 - /img/vr/s.jpg
 ---
 
-Native android VR app with gles implementation, compatible with Google Cardboard. It is a zju CG course project for *Discussions on Special Topics*. Visit [github](https://github.com/Luke-Skycrawler/android_ndk-gles-example) for the full code.
+Native android VR app with gles implementation, compatible with Google Cardboard. It is a ZJU CG course project for *Discussions on Special Topics*. Visit [github](https://github.com/Luke-Skycrawler/android_ndk-gles-example) for the full code.
 <!-- more -->
 Features:
 - [x] shadow map
