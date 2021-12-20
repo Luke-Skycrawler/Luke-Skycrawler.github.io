@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"luke-skycrawler.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="In this paper, we propose a novel workflow to allow users to seamlessly tune their simulations for a smaller memory footprint, which is especially valuable for scaling the simulation to a higher resol">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Auto-Quantization in Physical Simulations">
+<meta property="og:url" content="https://luke-skycrawler.github.io/2021/12/17/auto-quantization/index.html">
+<meta property="og:site_name" content="Haoyang Shi&#39;s Personal Website">
+<meta property="og:description" content="In this paper, we propose a novel workflow to allow users to seamlessly tune their simulations for a smaller memory footprint, which is especially valuable for scaling the simulation to a higher resol">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-12-17T16:32:17.000Z">
+<meta property="article:modified_time" content="2021-12-20T12:39:25.784Z">
+<meta property="article:author" content="Haoyang Shi">
+<meta property="article:tag" content="taichi">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://luke-skycrawler.github.io/2021/12/17/auto-quantization/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>Auto-Quantization in Physical Simulations | Haoyang Shi's Personal Website</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Haoyang Shi's Personal Website</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-projects">
+
+    <a href="/" rel="section"><i class="fa fa-archive fa-fw"></i>Projects</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/CV/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://luke-skycrawler.github.io/2021/12/17/auto-quantization/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/img/avatar.jfif">
+      <meta itemprop="name" content="Haoyang Shi">
+      <meta itemprop="description" content=" Senior student, RA @CAD & CG Lab, zju under Prof. Weiwei Xu.
+My research interest lies roughly in the reign of Computer Graphics and Physical Simulation, while open to intersections with other powerful advancements in theories or methodologies as well. 
+Seeking opportunities for MS/Ph.D. pursuit.">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Haoyang Shi's Personal Website">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Auto-Quantization in Physical Simulations
+        </h1>
+
+        <div class="post-meta">
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-12-20 12:39:25" itemprop="dateModified" datetime="2021-12-20T12:39:25+00:00">2021-12-20</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>In this paper, we propose a novel workflow to allow users to seamlessly tune their simulations for a smaller memory footprint, which is especially valuable for scaling the simulation to a higher resolution. Given an objective for compression rate or relative error bound, the whole process is automated as part of the compiler support, and each identified variable is statically assigned to an appropriate length-optimized type. Referencing the derivatives supplied by auto-diff support, we proposed a precise estimation of the round-off errors with respect to quantization schemes, allowing us to achieve much higher efficiency than Random Search in determining the quantization schemes. We implemented several examples to demonstrate the generality and efficacy of our method, in which the average compression rate is 1.9, without degradation of perceived physical feasibility in visual effects.  </p>
+<p>(Coming soon)</p>
+<span id="more"></span>
+
+<video src="/videos/compression.mp4" type='video/mp4' controls='controls' width='100%' height='100%'>
+</video>
+ 
+<p><strong>Top left:</strong> float64. <strong>Top right:</strong> compression rate 1.7. <strong>Bottom left:</strong> compression rate 2.0. <strong>Bottom right:</strong> compression rate 2.5. </p>
+<!-- 
+### 1. Introduction
+Previously, QuanTaichi \cite{hu2021quantaichi} implemented a compiler-supported "quantized" type system, providing user control over representations of physical variables in memory to achieve a higher information density. 
+
+Undoubtedly, the quantized type is a desirable invention for large-scale simulations with high resolutions. For the simulations on a single GPU, the introduction of lower-precision("quantized") types breaks the hard limit on the simulated particle count posed by the amount of available device-side memory by as much as 1.7 times. On the other hand, multiple-GPU simulations are benefited both on scale and speed, as the quantized types save a similar proportion on the bandwidth consumption. 
+
+Reportedly, researchers are beginning to tap into the potential of quantizing in the field of artificial intelligence, where exhilarating results manifest that a quantized 8-bit neural network is x-times faster than its floating-point counterpart in training, yet still achieving the same level of accuracy \cite{gholami2021survey}.
+
+However, we are not safe to assume the quantization as a 'harmless' gift until we find the answer to a series of questions on the influence of quantization on the simulated process. How much further can we compress the variables before the quality loss become intolerable, and how many bits of information are essential to encode the whole process? 
+With the current "quantaichi" implementation, users have to tackle these core issues themselves, most likely by trial-and-error and completely void of systematic assistance.
+
+Except for the efforts of automatic decision of fixed-point scheme \cite{wang2011automated} in computer-aided hardware design, few existing attempts have been made on automatic customization of bit length in the field of computer simulations. 
+The problem is weaved with the following troublesome characteristic: 
+
+(1) Quantization error tends to accumulate over time, eventually hijacking the ensuing simulation. Nevertheless, there are a series of simulations that are sensitive to the initial condition. As a result, point-to-point correspondence in the final result is almost impossible, giving rise to the necessity of an alternative definition of the loss of visual effect.
+
+(2) As the number of the customized types grows, the search space fluctuates exponentially. This curse of dimension makes fine-grained customization almost impossible.
+
+(3) The sparsity of the controlled variable in the decision of fraction bits. It means that we must either solve a discrete optimization or apply relaxation to the original problem.
+
+Inspired by the Error Propagation formula, we consult the derivatives to estimate the impact of quantization error. We generalized the workflow to a compiler-supported automated quantizing support.
+With our system, users can effortlessly achieve a human-compatible compression rate with a physically plausible visual effect. 
+
+To achieve those benefits, users must specify a key measurement $z$ to indicate simulation quality, e.g. the energy function for energetic liquid simulation. Depending on their emphasis, users can choose their focus between fidelity and compression rate, by either appointing a relative error constrain or setting a target compression rate. 
+
+Due to the precise estimation of quantization error, our method has the following benefits to distinguish itself from existing quantizing frameworks:
+
+\textbf{Quantitative:} Depending on users' emphasis, we provide quantitative guarantees on the quality of the resultant quantizing scheme. If fidelity is the focus, our typical solution achieves a distribution of an average and standard variance of xxx and xxx times of error bound respectively. Or, for the user-specified compression rate, we guarantee to meet the constrain with minor exceptions due to up-rounding of the required fraction bits.
+
+\textbf{Time-efficient:} We are able to arrive at a fair combination after a single run of the simulation, whereas the final solution lies only one or two bits away. For the specified error bound to hold, the median of iteration times for simulation is xxx.
+
+
+
+Collectively, our main contributions are:
+
+(1) An general error analysis scheme to precisely estimate quantization error relying on the gradients.
+
+(2) Introduction of dithering, an efficient technique for controlling quantization error in scalable simulations.
+
+(3) A simple compiler interface for users to automatically decide and apply quantization to the variables and an enhancement on the current automatic differentiation implementation to lower the threshold of our prerequisites. 
+
+(4) A series of experiments to substantiate the scalability of our quantization scheme and to provide suggestions for constraint target functions.
+
+
+Our system is implemented as an extension to the Taichi programming language\cite{hu2019taichi} to take advantage of its autodiff feature. However, our methods are general for simulations implemented on any differentiable programming systems. -->
+
+
+    </div>
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/taichi/" rel="tag"># taichi</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/11/17/pbd/" rel="prev" title="Position-Based Dynamics">
+      <i class="fa fa-chevron-left"></i> Position-Based Dynamics
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Haoyang Shi"
+      src="/img/avatar.jfif">
+  <p class="site-author-name" itemprop="name">Haoyang Shi</p>
+  <div class="site-description" itemprop="description"> Senior student, RA @CAD & CG Lab, zju under Prof. Weiwei Xu.
+My research interest lies roughly in the reign of Computer Graphics and Physical Simulation, while open to intersections with other powerful advancements in theories or methodologies as well. 
+Seeking opportunities for MS/Ph.D. pursuit.</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">6</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Luke-Skycrawler" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Luke-Skycrawler" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/shay@zju.edu.cn" title="Email → shay@zju.edu.cn"><i class="fa fa-envelope fa-fw"></i>Email</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Haoyang Shi</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
