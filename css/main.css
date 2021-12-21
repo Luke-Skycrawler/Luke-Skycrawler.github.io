@@ -1222,7 +1222,7 @@ pre .javascript .function {
 }
 .links-of-author a::before,
 .links-of-author span.exturl::before {
-  background: #11ff96;
+  background: #7df758;
   border-radius: 50%;
   content: ' ';
   display: inline-block;
@@ -1814,7 +1814,7 @@ pre .javascript .function {
 @media (max-width: 767px) {
   .post-gallery {
     grid-auto-flow: column;
-    grid-template-rows: 1fr 1fr;
+    grid-template-rows: auto auto;
     grid-template-columns: 1fr;
     margin-bottom: 0px;
   }
