@@ -11,7 +11,7 @@ I'm a senior student at **Zhejiang University**. Currently, I work as a research
 
 - 📖I had wandered a bit before settling on my current research interest. My former experience is in computer systems and architecture. I was fortunate enough to represent ZJU in National Computer System Capability Challenge and won 2nd place with my brilliant teammates [@Ziqi Yuan](https://github.com/monikerzju) and [@Xujie Shen](https://github.com/monikerzju). 
 
-- 📋I'm working on auto-quantization compiler support based on [taichi](https://github.com/taichi-dev/taichi) project, running against *SIGGRAPH 2022* deadline. 
+- 📋I'm working on auto-quantization compiler support based on [taichi](https://github.com/taichi-dev/taichi) project as joint first author, running against *SIGGRAPH 2022* deadline. 
 
 - 🎓**I'm looking into opportunities for MS/Ph.D. pursuit.**
 

@@ -11,10 +11,10 @@ mathjax: true
 In this paper, we propose a novel workflow to allow users to seamlessly tune their simulations for a smaller memory footprint, which is especially valuable for scaling the simulation to a higher resolution. Given an objective for compression rate or relative error bound, the whole process is automated as part of the compiler support, and each identified variable is statically assigned to an appropriate length-optimized type. Referencing the derivatives supplied by auto-diff support, we proposed a precise estimation of the round-off errors with respect to quantization schemes, allowing us to achieve much higher efficiency than Random Search in determining the quantization schemes. We implemented several examples to demonstrate the generality and efficacy of our method, in which the average compression rate is 1.9, without degradation of perceived physical feasibility in visual effects.  
 
 
-(Coming soon, manuscript in preparation for *SIGGRAPH 2022*)
+(Coming soon)
 
 <!-- more -->
-
+<!-- 
 > **This version is for preview only. Usage without permission or proper reference is not allowed. **
 @article{
   author    = {Liu, Jiafeng^* and Shi, Haoyang^* and Xu, Weiwei and Yang, Yin and Ma, Chongyang},
@@ -211,7 +211,7 @@ The benefit of dithering comes in threefold:
 
 3. The randomness introduced by dithering does not harm the number of valid digits, as it only tampers the least significant digit by at most 1. 
 
-
+ -->
 
 ### Preliminary Results
 
