@@ -21,11 +21,24 @@ An **enc**rypted (**enc**lave-based) **he**terogeneous **ca**lculation **p**roto
 
 ![demo](/img/sgx/demo_box.png)
 
+**Notice**: We have not implemented the user-server code into the library/sample now, since it's similar to the host-device part of our protocol. For now, we just implement the host-device part. In this repository, we show how to wrap up the `cudaMemcpy()` into `secureCudaMemcpy()`, doing implicit en/decryption for handy secure deployment.
+
+#### Phase I: Initialization
+- [x] Create an enclave
+- [x] Enclave generates its own keys (generation is yet an empty shell now), then broadcasts its public key to user & device
+- [x] GPU generates its own keys (generation is yet an empty shell now), then broadcasts its public key to host & user
+
+#### Phase II: Calculation
+- [x] En/Decrypt in enclave (decrypt with SGX's private key, encrypt with GPU's public key)
+- [x] En/Decrypt on GPU (decrypt with GPU's private key, encrypt with SGX's public key)
+
 ### Enchecap performance:
 
 ![performance](/img/sgx/Enchecap_performance_0.png)
 
 ---
+
+### Installation
 
 To **build** the project, you'll need to install and configure:
 * SGX SDK
@@ -68,18 +81,6 @@ Run with:
 ./app
 ```
 
-## TODO
-
-**Notice**: We have not implemented the user-server code into the library/sample now, since it's similar to the host-device part of our protocol. For now, we just implement the host-device part. In this repository, we show how to wrap up the `cudaMemcpy()` into `secureCudaMemcpy()`, doing implicit en/decryption for handy secure deployment.
-
-### Phase I: Initialization
-- [x] Create an enclave
-- [x] Enclave generates its own keys (generation is yet an empty shell now), then broadcasts its public key to user & device
-- [x] GPU generates its own keys (generation is yet an empty shell now), then broadcasts its public key to host & user
-
-### Phase II: Calculation
-- [x] En/Decrypt in enclave (decrypt with SGX's private key, encrypt with GPU's public key)
-- [x] En/Decrypt on GPU (decrypt with GPU's private key, encrypt with SGX's public key)
 
 ### Future Work
 - [ ] The GPU's and SGX's keys are both simply welded in the code currently, need FIX
