@@ -15,7 +15,7 @@ I'm a senior student at **Zhejiang University**. Currently, I work as a research
 
 - 🎓**I'm looking into opportunities for MS/Ph.D. pursuit.**
 
-My downloadable CV is attached below:
+My [**downloadable CV**](./shy.pdf) is attached below:
 {% raw %}
 <embed src="./shy.pdf" width="100%" height="877px"/>
 {% endraw%}
