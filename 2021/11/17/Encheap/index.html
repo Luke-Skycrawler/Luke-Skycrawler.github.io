@@ -32,7 +32,7 @@
 <meta property="og:image" content="https://luke-skycrawler.github.io/img/sgx/demo_box.png">
 <meta property="og:image" content="https://luke-skycrawler.github.io/img/sgx/Enchecap_performance_0.png">
 <meta property="article:published_time" content="2021-11-17T16:31:35.000Z">
-<meta property="article:modified_time" content="2021-12-21T05:34:33.188Z">
+<meta property="article:modified_time" content="2021-12-21T06:26:00.108Z">
 <meta property="article:author" content="Haoyang Shi">
 <meta property="article:tag" content="CUDA">
 <meta property="article:tag" content="SGX">
@@ -181,7 +181,7 @@ Seeking opportunities for MS/Ph.D. pursuit.">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-12-21 05:34:33" itemprop="dateModified" datetime="2021-12-21T05:34:33+00:00">2021-12-21</time>
+                <time title="Modified: 2021-12-21 06:26:00" itemprop="dateModified" datetime="2021-12-21T06:26:00+00:00">2021-12-21</time>
               </span>
 
           
@@ -201,9 +201,19 @@ Seeking opportunities for MS/Ph.D. pursuit.">
 <span id="more"></span>
 <h3 id="Enchecap-illustration"><a href="#Enchecap-illustration" class="headerlink" title="Enchecap illustration:"></a>Enchecap illustration:</h3><p><img src="/img/sgx/demo.png" alt="demo"></p>
 <h3 id="Enchecap-illustration-with-protected-and-trusted-regions"><a href="#Enchecap-illustration-with-protected-and-trusted-regions" class="headerlink" title="Enchecap illustration (with protected and trusted regions):"></a>Enchecap illustration (with <strong>protected</strong> and <strong>trusted</strong> regions):</h3><p><img src="/img/sgx/demo_box.png" alt="demo"></p>
+<p><strong>Notice</strong>: We have not implemented the user-server code into the library/sample now, since it’s similar to the host-device part of our protocol. For now, we just implement the host-device part. In this repository, we show how to wrap up the <code>cudaMemcpy()</code> into <code>secureCudaMemcpy()</code>, doing implicit en/decryption for handy secure deployment.</p>
+<h4 id="Phase-I-Initialization"><a href="#Phase-I-Initialization" class="headerlink" title="Phase I: Initialization"></a>Phase I: Initialization</h4><ul>
+<li><input checked="" disabled="" type="checkbox"> Create an enclave</li>
+<li><input checked="" disabled="" type="checkbox"> Enclave generates its own keys (generation is yet an empty shell now), then broadcasts its public key to user &amp; device</li>
+<li><input checked="" disabled="" type="checkbox"> GPU generates its own keys (generation is yet an empty shell now), then broadcasts its public key to host &amp; user</li>
+</ul>
+<h4 id="Phase-II-Calculation"><a href="#Phase-II-Calculation" class="headerlink" title="Phase II: Calculation"></a>Phase II: Calculation</h4><ul>
+<li><input checked="" disabled="" type="checkbox"> En/Decrypt in enclave (decrypt with SGX’s private key, encrypt with GPU’s public key)</li>
+<li><input checked="" disabled="" type="checkbox"> En/Decrypt on GPU (decrypt with GPU’s private key, encrypt with SGX’s public key)</li>
+</ul>
 <h3 id="Enchecap-performance"><a href="#Enchecap-performance" class="headerlink" title="Enchecap performance:"></a>Enchecap performance:</h3><p><img src="/img/sgx/Enchecap_performance_0.png" alt="performance"></p>
 <hr>
-<p>To <strong>build</strong> the project, you’ll need to install and configure:</p>
+<h3 id="Installation"><a href="#Installation" class="headerlink" title="Installation"></a>Installation</h3><p>To <strong>build</strong> the project, you’ll need to install and configure:</p>
 <ul>
 <li>SGX SDK</li>
 <li>CUDA Toolkit</li>
@@ -230,16 +240,7 @@ Seeking opportunities for MS/Ph.D. pursuit.">
 <p>Run with:</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./app</span><br></pre></td></tr></table></figure>
 
-<h2 id="TODO"><a href="#TODO" class="headerlink" title="TODO"></a>TODO</h2><p><strong>Notice</strong>: We have not implemented the user-server code into the library/sample now, since it’s similar to the host-device part of our protocol. For now, we just implement the host-device part. In this repository, we show how to wrap up the <code>cudaMemcpy()</code> into <code>secureCudaMemcpy()</code>, doing implicit en/decryption for handy secure deployment.</p>
-<h3 id="Phase-I-Initialization"><a href="#Phase-I-Initialization" class="headerlink" title="Phase I: Initialization"></a>Phase I: Initialization</h3><ul>
-<li><input checked="" disabled="" type="checkbox"> Create an enclave</li>
-<li><input checked="" disabled="" type="checkbox"> Enclave generates its own keys (generation is yet an empty shell now), then broadcasts its public key to user &amp; device</li>
-<li><input checked="" disabled="" type="checkbox"> GPU generates its own keys (generation is yet an empty shell now), then broadcasts its public key to host &amp; user</li>
-</ul>
-<h3 id="Phase-II-Calculation"><a href="#Phase-II-Calculation" class="headerlink" title="Phase II: Calculation"></a>Phase II: Calculation</h3><ul>
-<li><input checked="" disabled="" type="checkbox"> En/Decrypt in enclave (decrypt with SGX’s private key, encrypt with GPU’s public key)</li>
-<li><input checked="" disabled="" type="checkbox"> En/Decrypt on GPU (decrypt with GPU’s private key, encrypt with SGX’s public key)</li>
-</ul>
+
 <h3 id="Future-Work"><a href="#Future-Work" class="headerlink" title="Future Work"></a>Future Work</h3><ul>
 <li><input disabled="" type="checkbox"> The GPU’s and SGX’s keys are both simply welded in the code currently, need FIX</li>
 <li><input disabled="" type="checkbox"> The current RSA en/decrypt algorithm is yet extremely naive! (further works include regrouping, big number supports…)</li>
@@ -336,7 +337,7 @@ Seeking opportunities for MS/Ph.D. pursuit.">
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Enchecap-illustration"><span class="nav-number">1.</span> <span class="nav-text">Enchecap illustration:</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Enchecap-illustration-with-protected-and-trusted-regions"><span class="nav-number">2.</span> <span class="nav-text">Enchecap illustration (with protected and trusted regions):</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Enchecap-performance"><span class="nav-number">3.</span> <span class="nav-text">Enchecap performance:</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TODO"><span class="nav-number"></span> <span class="nav-text">TODO</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Phase-I-Initialization"><span class="nav-number">1.</span> <span class="nav-text">Phase I: Initialization</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Phase-II-Calculation"><span class="nav-number">2.</span> <span class="nav-text">Phase II: Calculation</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Future-Work"><span class="nav-number">3.</span> <span class="nav-text">Future Work</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Enchecap-illustration"><span class="nav-number">1.</span> <span class="nav-text">Enchecap illustration:</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Enchecap-illustration-with-protected-and-trusted-regions"><span class="nav-number">2.</span> <span class="nav-text">Enchecap illustration (with protected and trusted regions):</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Phase-I-Initialization"><span class="nav-number">2.1.</span> <span class="nav-text">Phase I: Initialization</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Phase-II-Calculation"><span class="nav-number">2.2.</span> <span class="nav-text">Phase II: Calculation</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Enchecap-performance"><span class="nav-number">3.</span> <span class="nav-text">Enchecap performance:</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Installation"><span class="nav-number">4.</span> <span class="nav-text">Installation</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Future-Work"><span class="nav-number">5.</span> <span class="nav-text">Future Work</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 

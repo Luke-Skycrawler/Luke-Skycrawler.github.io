@@ -29,7 +29,7 @@
 <meta property="og:description" content="A simple Position-based Dynamics implementation based on glut.">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2021-11-17T17:58:13.000Z">
-<meta property="article:modified_time" content="2021-12-21T05:34:33.188Z">
+<meta property="article:modified_time" content="2021-12-21T06:26:00.108Z">
 <meta property="article:author" content="Haoyang Shi">
 <meta property="article:tag" content="glut">
 <meta name="twitter:card" content="summary">
@@ -176,7 +176,7 @@ Seeking opportunities for MS/Ph.D. pursuit.">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-12-21 05:34:33" itemprop="dateModified" datetime="2021-12-21T05:34:33+00:00">2021-12-21</time>
+                <time title="Modified: 2021-12-21 06:26:00" itemprop="dateModified" datetime="2021-12-21T06:26:00+00:00">2021-12-21</time>
               </span>
 
           
@@ -190,7 +190,7 @@ Seeking opportunities for MS/Ph.D. pursuit.">
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>A simple Position-based Dynamics implementation based on glut. <span id="more"></span>No clamping is added so the cloth looks a little eccentric. Visit <a target="_blank" rel="noopener" href="https://github.com/Luke-Skycrawler/pbd">github</a> for more information.</p>
+        <p>A simple Position-based Dynamics implementation based on glut. <span id="more"></span> My starter project in physical simulations, which is assigned to me as an interview task. No clamping or self-collision is added, so the cloth folds eccentrically and never stops shaking. Other problems include the sphere always dropping to the left, probably because the Gaussian-Sedel iteration always starts from the right side of the cloth mesh, which introduces an unbalanced impact. Only the vertices are tested in the collision detection, and a little lift is added to the sphere to avoid visual artifacts. Visit <a target="_blank" rel="noopener" href="https://github.com/Luke-Skycrawler/pbd">github</a> for full code.</p>
 
 <video src="/videos/demo.mp4" type='video/mp4' controls='controls' width='100%' height='100%'>
 </video>
