@@ -1,5 +1,5 @@
 ---
-title: Auto Quantization in Physical Simulations
+title: (Coming Soon) # Auto Quantization in Physical Simulations
 date: 2021-12-17 16:32:17
 tags: taichi
 thumbnail: 
@@ -9,7 +9,7 @@ mathjax: true
 ---
 
 <!-- In this paper, we propose a novel workflow that allows users to seamlessly tune their simulations for a smaller memory footprint, which is especially valuable for scaling the simulation to a higher resolution. Given an objective for compression rate or relative error bound, the whole process is automated as part of the compiler support, and each identified variable is statically assigned to an appropriate length-optimized type. Referencing the derivatives supplied by auto-diff support, we proposed a precise estimation of the round-off errors with respect to quantization schemes, allowing us to achieve much higher efficiency than Random Search in determining the quantization schemes. We implemented several examples to demonstrate the generality and efficacy of our method, in which the average compression rate is 1.9, without degradation of perceived physical feasibility in visual effects.   -->
-In this paper, we propose a novel workflow that allows users to seamlessly tune their simulations for a smaller memory footprint, which is especially valuable for scaling the simulation to a higher resolution. Due to precise estimation of the round-off errors, we achieve much higher efficiency than Random Search in determining the quantization schemes.
+<!-- In this paper, we propose a novel workflow that allows users to seamlessly tune their simulations for a smaller memory footprint, which is especially valuable for scaling the simulation to a higher resolution. Due to precise estimation of the round-off errors, we achieve much higher efficiency than Random Search in determining the quantization schemes. -->
 
 
 >(Coming soon)
@@ -214,11 +214,11 @@ The benefit of dithering comes in threefold:
 
  -->
 
-### Preliminary Results
+<!-- ### Preliminary Results
 
 **Video:** Comprarison of float 64 ground truth and resultant simulation with our derived quantization scheme. The compression rate is as high as 2.5x but no distinguishable artifacts could be recongnized. 
 {% raw %}
 <video src="/videos/compression.mp4" type='video/mp4' controls='controls' width='100%' height='100%'>
 </video>
 {% endraw%} 
-**Top left:** float64. **Top right:** compression rate 1.7. **Bottom left:** compression rate 2.0. **Bottom right:** compression rate 2.5. 
+**Top left:** float64. **Top right:** compression rate 1.7. **Bottom left:** compression rate 2.0. **Bottom right:** compression rate 2.5.  -->
